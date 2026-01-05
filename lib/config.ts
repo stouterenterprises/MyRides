@@ -50,11 +50,11 @@ export function getConfigValue<T = any>(config: Record<string, any>, key: string
   // Parse JSON values if needed
   if (typeof config[key] === 'string') {
     try {
-      return JSON.parse(config[key]);
+      return JSON.parse(config[key]) as T;
     } catch {
-      return config[key];
+      return config[key] as T;
     }
   }
 
-  return config[key];
+  return config[key] as T;
 }

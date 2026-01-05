@@ -2,7 +2,8 @@
 // Shared TypeScript Types
 // =====================================================
 
-export type UserRole = 'rider' | 'driver' | 'admin';
+export type UserRole = 'rider' | 'driver' | 'admin' | 'shop_owner' | 'shop_manager' | 'shop_staff';
+export type ShopStaffRole = 'owner' | 'manager' | 'cashier' | 'server' | 'kitchen';
 export type MarketStatus = 'coming_soon' | 'active' | 'paused';
 export type MarketRequestStatus = 'pending' | 'approved' | 'rejected' | 'merged';
 export type JobType = 'ride' | 'delivery';
@@ -313,6 +314,60 @@ export interface Config {
   description: string | null;
   updated_at: string;
   updated_by: string | null;
+}
+
+export interface ShopStaff {
+  id: string;
+  shop_id: string;
+  user_id: string;
+  role: ShopStaffRole;
+  permissions: {
+    manage_orders: boolean;
+    manage_menu: boolean;
+    manage_staff: boolean;
+    view_analytics: boolean;
+  };
+  is_active: boolean;
+  invited_by: string | null;
+  invited_at: string;
+  accepted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ShopHours {
+  id: string;
+  shop_id: string;
+  day_of_week: number; // 0-6, 0 = Sunday
+  open_time: string;
+  close_time: string;
+  is_closed: boolean;
+  created_at: string;
+}
+
+export interface ShopMenuItem {
+  id: string;
+  shop_id: string;
+  name: string;
+  description: string | null;
+  category: string | null;
+  price_cents: number;
+  image_url: string | null;
+  is_available: boolean;
+  preparation_time_minutes: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrderItem {
+  id: string;
+  ride_id: string;
+  menu_item_id: string | null;
+  item_name: string;
+  quantity: number;
+  price_cents: number;
+  special_instructions: string | null;
+  created_at: string;
 }
 
 // API Response types
